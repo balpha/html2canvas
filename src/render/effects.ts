@@ -3,7 +3,8 @@ import {Path} from './path';
 
 export const enum EffectType {
     TRANSFORM = 0,
-    CLIP = 1
+    CLIP = 1,
+    OPACITY = 2
 }
 
 export const enum EffectTarget {
@@ -43,7 +44,19 @@ export class ClipEffect implements IElementEffect {
         this.path = path;
     }
 }
+export class OpacityEffect implements IElementEffect {
+    readonly type: EffectType;
+    readonly target: number;
+    readonly opacity: number;
+
+    constructor(opacity: number, target: EffectTarget) {
+        this.type = EffectType.OPACITY;
+        this.target = target;
+        this.opacity = opacity;
+    }
+}
 
 export const isTransformEffect = (effect: IElementEffect): effect is TransformEffect =>
     effect.type === EffectType.TRANSFORM;
 export const isClipEffect = (effect: IElementEffect): effect is ClipEffect => effect.type === EffectType.CLIP;
+export const isOpacityEffect = (effect: IElementEffect): effect is OpacityEffect => effect.type === EffectType.OPACITY;
